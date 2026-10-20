@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>منصة تفاصيل للتدريب | البوابة الذكية للغات</title>
+  <style>
+    :root {
+      --bg: #0A0F1D;
+      --card-bg: #141B2D;
+      --card-border: #1E293B;
+      --gold: #D4AF37;
+      --gold-light: #F3E5AB;
+      --primary: #3B82F6;
+      --text: #F8FAFC;
+      --muted: #94A3B8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 20px 16px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .hub-container {
+      width: 100%;
+      max-width: 440px;
+      background: radial-gradient(circle at top, #1e3a8a 0%, var(--bg) 75%);
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 24px;
+      padding: 30px 20px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(59, 130, 246, 0.15);
+      border: 1px solid var(--primary);
+      color: #93c5fd;
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .hub-title {
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: #FFF;
+      margin-bottom: 4px;
+      letter-spacing: 0.5px;
+    }
+
+    .hub-subtitle {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 22px;
+    }
+
+    /* أزرار القائمة الرئيسية */
+    .hub-links {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .hub-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text);
+      text-decoration: none;
+      padding: 13px 16px;
+      border-radius: 14px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    .hub-btn:hover {
+      background: var(--primary);
+      color: #FFF;
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    .hub-btn span.icon { font-size: 1.1rem; }
+    .hub-btn span.arrow { color: var(--primary); font-size: 1rem; }
+    .hub-btn:hover span.arrow { color: #FFF; }
+
+    /* لوحة المحتوى التفاعلي */
+    .content-panel {
+      display: none;
+      background: #111827;
+      border: 1px solid var(--primary);
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 20px;
+      text-align: right;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .content-panel.active { display: block; }
+
+    .content-panel h3 {
+      font-size: 1.05rem;
+      color: #93c5fd;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+    .close-btn:hover { color: #FFF; }
+
+    /* عناصر الدورات والتفاصيل */
+    .course-card {
+      background: #1f2937;
+      border: 1px solid #374151;
+      padding: 10px 12px;
+      border-radius: 10px;
+      margin-bottom: 8px;
+    }
+
+    .course-card h4 { font-size: 0.9rem; color: #FFF; margin-bottom: 2px; }
+    .course-card p { font-size: 0.78rem; color: var(--muted); margin-bottom: 6px; }
+    .course-card span { font-size: 0.8rem; color: #34d399; font-weight: bold; }
+
+    .action-link-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #FFF;
+      text-decoration: none;
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 0.85rem;
+      width: 100%;
+      text-align: center;
+      margin-top: 8px;
+    }
+    .action-link-btn:hover { background: #2563eb; }
+
+    /* صندوق تقييم المدرب */
+    .staff-card {
+      background: #1f2937;
+      border: 1px solid #374151;
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+    .staff-card h4 { font-size: 0.95rem; color: #FFF; margin-bottom: 2px; }
+    .staff-card p { font-size: 0.78rem; color: var(--muted); margin-bottom: 8px; }
+    
+    .stars-container {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin: 10px 0;
+      cursor: pointer;
+      font-size: 1.4rem;
+    }
+    .star { color: #555; transition: 0.2s; }
+    .star.selected { color: #fbbf24; }
+
+    .hub-footer {
+      font-size: 0.75rem;
+      color: var(--muted);
+      border-top: 1px dashed rgba(59, 130, 246, 0.3);
+      padding-top: 14px;
+      margin-top: 8px;
+    }
+    .hub-footer strong { color: #FFF; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hub-container">
+    <span class="badge">البوابة الذكية للمتدربين 🎓</span>
+    <div class="hub-title">مركز تفاصيل للتدريب</div>
+    <div class="hub-subtitle">دورات لغات أونلاين، تقييمات، واختبارات معتمدة</div>
+
+    <!-- الأزرار الرئيسية -->
+    <div class="hub-links">
+      <button class="hub-btn" onclick="showPanel('coursesPanel')">
+        <span class="icon">📚</span>
+        <span>استعراض الدورات والأسعار</span>
+        <span class="arrow">←</span>
+      </button>
+
+      <button class="hub-btn" onclick="showPanel('testPanel')">
+        <span class="icon">📝</span>
+        <span>اختبار تحديد المستوى المجاني</span>
+        <span class="arrow">←</span>
+      </button>
+
+      <button class="hub-btn" onclick="showPanel('trainerPanel')">
+        <span class="icon">⭐</span>
+        <span>تقييم أداء المدرب والحصة</span>
+        <span class="arrow">←</span>
+      </button>
+
+      <button class="hub-btn" onclick="showPanel('paymentPanel')">
+        <span class="icon">💳</span>
+        <span>التقسيط المرن (تابي وتمارا)</span>
+        <span class="arrow">←</span>
+      </button>
+
+      <button class="hub-btn" onclick="showPanel('contactPanel')">
+        <span class="icon">💬</span>
+        <span>التواصل المباشر وخدمة العملاء</span>
+        <span class="arrow">←</span>
+      </button>
+    </div>
+
+    <!-- 1. لوحة الدورات والأسعار -->
+    <div id="coursesPanel" class="content-panel">
+      <h3><span>📚 باقات دورات اللغات</span> <button class="close-btn" onclick="closePanel()">✕</button></h3>
+      <div class="course-card">
+        <h4>كورس لغة إنجليزية (3 أشهر)</h4>
+        <p>حصص لايف مباشرة مع مدرب + ألعاب تفاعلية</p>
+        <span>240 ر.س (بدل 3000 ر.س)</span>
+        <a href="https://tfaseel.sa/ar" target="_blank" class="action-link-btn" style="padding: 6px; font-size: 0.78rem; margin-top:6px;">سجل الآن</a>
+      </div>
+      <div class="course-card">
+        <h4>كورس لغة إنجليزية (6 أشهر)</h4>
+        <p>البرنامج الشامل لإتقان اللغة بطلاقة</p>
+        <span>496 ر.س (بدل 6000 ر.س)</span>
+        <a href="https://tfaseel.sa/ar" target="_blank" class="action-link-btn" style="padding: 6px; font-size: 0.78rem; margin-top:6px;">سجل الآن</a>
+      </div>
+    </div>
+
+    <!-- 2. لوحة تحديد المستوى -->
+    <div id="testPanel" class="content-panel">
+      <h3><span>📝 تحديد المستوى</span> <button class="close-btn" onclick="closePanel()">✕</button></h3>
+      <p style="font-size: 0.85rem; margin-bottom: 10px;">لا تعرف مستواك الحالي؟ ابدأ اختبار تحديد المستوى المجاني واكتشف الكورس المناسب لك خلال دقائق.</p>
+      <a href="https://tfaseel.sa/ar" target="_blank" class="action-link-btn">ابدأ الاختبار الآن مجاناً</a>
+    </div>
+
+    <!-- 3. لوحة تقييم المدرب -->
+    <div id="trainerPanel" class="content-panel">
+      <h3><span>⭐ تقييم الحصة والمدرب</span> <button class="close-btn" onclick="closePanel()">✕</button></h3>
+      <div class="staff-card">
+        <h4>أ. جون (مدرب اللغة الإنجليزية)</h4>
+        <p>حصة المحادثة المباشرة - قاعة رقم 2</p>
+        <div class="stars-container" id="starContainer">
+          <span class="star" onclick="rateTrainer(1)">★</span>
+          <span class="star" onclick="rateTrainer(2)">★</span>
+          <span class="star" onclick="rateTrainer(3)">★</span>
+          <span class="star" onclick="rateTrainer(4)">★</span>
+          <span class="star" onclick="rateTrainer(5)">★</span>
+        </div>
+        <p id="rateMsg" style="font-size: 0.78rem; color: #93c5fd; min-height: 18px;"></p>
+      </div>
+    </div>
+
+    <!-- 4. لوحة التقسيط المرن -->
+    <div id="paymentPanel" class="content-panel">
+      <h3><span>💳 خيارات الدفع والتقسيط</span> <button class="close-btn" onclick="closePanel()">✕</button></h3>
+      <p style="font-size: 0.85rem; margin-bottom: 10px;">ادفع براحتك وعلى 4 دفعات بدون فوائد عبر شريكينا المعتمدين:</p>
+      <p style="font-weight: bold; color: #34d399; text-align: center; font-size: 1rem; margin: 8px 0;">✨ متوفر عبر (Tabby) و (Tamara)</p>
+      <a href="https://tfaseel.sa/ar" target="_blank" class="action-link-btn">تصفح تفاصيل التقسيط</a>
+    </div>
+
+    <!-- 5. لوحة التواصل -->
+    <div id="contactPanel" class="content-panel">
+      <h3><span>💬 خدمة العملاء والدعم</span> <button class="close-btn" onclick="closePanel()">✕</button></h3>
+      <p style="font-size: 0.85rem; margin-bottom: 10px;">فريقنا جاهز للإجابة عن استفساراتكم على مدار الساعة:</p>
+      <a href="https://wa.me/966503748889" target="_blank" class="action-link-btn">تواصل عبر واتساب المعهد</a>
+    </div>
+
+    <div class="hub-footer">
+      تطوير الحلول الرقمية: <strong>نبيل النمر</strong><br>
+      جميع الحقوق محفوظة لمركز تفاصيل © 2026
+    </div>
+  </div>
+
+  <script>
+    function showPanel(panelId) {
+      const panels = document.querySelectorAll('.content-panel');
+      panels.forEach(panel => panel.classList.remove('active'));
+      document.getElementById(panelId).classList.add('active');
+    }
+
+    function closePanel() {
+      const panels = document.querySelectorAll('.content-panel');
+      panels.forEach(panel => panel.classList.remove('active'));
+    }
+
+    function rateTrainer(stars) {
+      const allStars = document.querySelectorAll('.star');
+      allStars.forEach((star, index) => {
+        if (index < stars) {
+          star.classList.add('selected');
+        } else {
+          star.classList.remove('selected');
+        }
+      });
+      document.getElementById('rateMsg').innerHTML = `✓ شكراً لتقييمك (${stars}/5 نجوم) وتم تسجيله لإدارة الجودة!`;
+    }
+  </script>
+
+</body>
+</html>
