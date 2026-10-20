@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>منصة تفاصيل للتدريب | البوابة الذكية للغات</title>
+  <title>مركز تفاصيل للتدريب | البوابة الذكية للغات</title>
   <style>
     :root {
       --bg: #0A0F1D;
@@ -103,9 +103,20 @@
       transform: translateY(-2px);
     }
 
+    .hub-btn.gold-btn {
+      border-color: var(--gold);
+      background: linear-gradient(135deg, #141B2D 0%, #292510 100%);
+    }
+    .hub-btn.gold-btn:hover {
+      background: var(--gold);
+      color: #000;
+    }
+
     .hub-btn span.icon { font-size: 1.1rem; }
     .hub-btn span.arrow { color: var(--primary); font-size: 1rem; }
+    .hub-btn.gold-btn span.arrow { color: var(--gold); }
     .hub-btn:hover span.arrow { color: #FFF; }
+    .hub-btn.gold-btn:hover span.arrow { color: #000; }
 
     /* لوحة المحتوى التفاعلي */
     .content-panel {
@@ -119,6 +130,10 @@
       animation: fadeIn 0.3s ease;
     }
 
+    .content-panel.gold-panel {
+      border-color: var(--gold);
+    }
+
     .content-panel.active { display: block; }
 
     .content-panel h3 {
@@ -129,6 +144,7 @@
       justify-content: space-between;
       align-items: center;
     }
+    .content-panel.gold-panel h3 { color: var(--gold); }
 
     .close-btn {
       background: none;
@@ -152,6 +168,18 @@
     .course-card p { font-size: 0.78rem; color: var(--muted); margin-bottom: 6px; }
     .course-card span { font-size: 0.8rem; color: #34d399; font-weight: bold; }
 
+    /* بطاقة شرف الأوائل */
+    .honor-card {
+      background: linear-gradient(145deg, #1f2937, #111827);
+      border: 1px solid var(--gold);
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    .honor-card h4 { font-size: 0.95rem; color: var(--gold); margin-bottom: 4px; }
+    .honor-card p { font-size: 0.78rem; color: var(--muted); margin-bottom: 8px; }
+
     .action-link-btn {
       display: inline-block;
       background: var(--primary);
@@ -166,6 +194,12 @@
       margin-top: 8px;
     }
     .action-link-btn:hover { background: #2563eb; }
+
+    .action-link-btn.gold-action {
+      background: var(--gold);
+      color: #000;
+    }
+    .action-link-btn.gold-action:hover { background: #c5a028; }
 
     /* صندوق تقييم المدرب */
     .staff-card {
@@ -210,10 +244,16 @@
   <div class="hub-container">
     <span class="badge">البوابة الذكية للمتدربين 🎓</span>
     <div class="hub-title">مركز تفاصيل للتدريب</div>
-    <div class="hub-subtitle">دورات لغات أونلاين، تقييمات، واختبارات معتمدة</div>
+    <div class="hub-subtitle">دورات لغات أونلاين، تقييمات، وشهادات الأوائل الرقمية</div>
 
     <!-- الأزرار الرئيسية -->
     <div class="hub-links">
+      <button class="hub-btn gold-btn" onclick="showPanel('honorPanel')">
+        <span class="icon">🏆</span>
+        <span>لوحة شرف الأوائل والشهادات الرقمية</span>
+        <span class="arrow">←</span>
+      </button>
+
       <button class="hub-btn" onclick="showPanel('coursesPanel')">
         <span class="icon">📚</span>
         <span>استعراض الدورات والأسعار</span>
@@ -243,6 +283,24 @@
         <span>التواصل المباشر وخدمة العملاء</span>
         <span class="arrow">←</span>
       </button>
+    </div>
+
+    <!-- 0. لوحة شرف الأوائل (الجديدة) -->
+    <div id="honorPanel" class="content-panel gold-panel">
+      <h3><span>🏆 لوحة شرف المتفوقين</span> <button class="close-btn" onclick="closePanel()">✕</button></h3>
+      <p style="font-size: 0.8rem; color: var(--muted); margin-bottom: 12px;">تكريماً لتميز طلابنا، نحتفي بالأوائل الحاصلين على شهادات معتمدة مع بطاقات رقمية تفاعلية لمشاركتها فوراً:</p>
+      
+      <div class="honor-card">
+        <h4>🌟 الطالبة: سارة الأحمدي</h4>
+        <p>المركز الأول - دبلوم المحادثة المكثفة (تقدير ممتاز مع مرتبة الشرف)</p>
+        <a href="https://tfaseel.sa/ar" target="_blank" class="action-link-btn gold-action" style="padding: 6px; font-size: 0.78rem;">عرض الشهادة الرقمية المعتمدة</a>
+      </div>
+
+      <div class="honor-card">
+        <h4>🌟 الطالب: عبد الله القحطاني</h4>
+        <p>المركز الأول - دورة الإنجليزية للأعمال (اجتياز بامتياز)</p>
+        <a href="https://tfaseel.sa/ar" target="_blank" class="action-link-btn gold-action" style="padding: 6px; font-size: 0.78rem;">عرض الشهادة الرقمية المعتمدة</a>
+      </div>
     </div>
 
     <!-- 1. لوحة الدورات والأسعار -->
